@@ -5,16 +5,25 @@
  *
  * @args: pointer to a command of type char.
  */
-void wand_execmd(char **args)
+void wand_execute(struct command *format)
 {
-	char *format = NULL;
-
-	if (args)
+	char *args[ARGS_SIZE + 1];
+	int i;
+	pid_t child_pid = fork();
+	if (child_pid == -1)
 	{
-		format = args[0];
-		if (execve(format, args, NULL) == -1)
-		{
-			perror("Failure executing command:");
-		}
+		perror("fork");
+		exit(1);
 	}
+	else if (child_pid == 0)
+	{
+		for (i = 0; i < ARGS_SIZE; i++) 
+		{
+			args[i] = format->args[i];
+		}
+		args[ARGS_SIZE] = NULL;
+		execve(format->cmd, args, NULL);
+	}
+	wait(NULL);
 }
+

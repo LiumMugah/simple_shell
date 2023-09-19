@@ -4,12 +4,29 @@
  * main- runs the program.
  * Return: 0 when successful.
  */
-int main(void)
+int main()
 {
-	char *command = NULL;
+	char *command;
+	struct command *line;
 
-	wand_prompt();
-	wand_execmd(command);
-	
-	return (0);
+	while (true)
+	{
+		wand_prompt();
+
+		command = wand_prompt();
+		if (command == NULL)
+		{
+			break;
+		}
+
+		line = get_path(command);
+		if (line == NULL)
+		{
+			free(command);
+			continue;
+		}
+
+		wand_execute(line);
+	}
+		return (0);
 }

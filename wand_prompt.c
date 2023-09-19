@@ -5,7 +5,7 @@
  *
  * Return: 0 always.
  */
-int wand_prompt(void)
+char *wand_prompt()
 {
 	char *format = "($) ";
 	char *commandline;
@@ -17,13 +17,21 @@ int wand_prompt(void)
 
 	if (char_typed == -1)
 	{
-		printf("Exit \n");
-		return (-1);
+		if(feof(stdin))
+		{
+			printf("\n");
+			exit(EXIT_SUCCESS);
+		}
+		else
+		{
+			printf("not found \n");
+			exit(EXIT_FAILURE);
+		}
 	}
 
 	printf("%s\n", commandline);
 
 	free(commandline);
 	
-	return (0);
+	return commandline;
 }
