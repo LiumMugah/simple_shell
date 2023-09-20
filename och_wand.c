@@ -1,5 +1,4 @@
 #include "och_wand.h"
-
 /**
  * main- runs the program.
  * Return: 0 when successful.

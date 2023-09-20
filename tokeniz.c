@@ -1,4 +1,4 @@
-#include "och_wand.h"
+#include "shell.h"
 /**
  * wand_propmt - displays the prompt for user to input.
  *
