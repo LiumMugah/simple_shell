@@ -1,5 +1,5 @@
-#ifndef OCH_WAND
-#define OCH_WAND
+#ifndef SHELL
+#define SHELL
 
 #include <stdio.h>
 #include <stdlib.h>

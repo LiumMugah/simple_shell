@@ -1,4 +1,4 @@
-#include "och_wand.h"
+#include "shell.h"
 /**
  * wand_execmd- executes command inputed by the user
  *
