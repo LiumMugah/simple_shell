@@ -4,29 +4,43 @@
  * main- runs the program.
  * Return: 0 when successful.
  */
-int main()
+int main(void)
 {
-	char *command;
-	struct command *line;
+	char *command = NULL;
+	size_t bufsize = 0;
+	ssize_t chars_read;
+	char *args[COMMAND_LENGTH];
+	int is_interactive = isatty(fileno(stdin));
 
-	while (true)
+	while (1)
 	{
-		wand_prompt();
-
-		command = wand_prompt();
-		if (command == NULL)
+		if (is_interactive)
 		{
-			break;
+			printf("($) ");
+			chars_read = getline(&command, &bufsize, stdin);
+			if (chars_read == -1)
+			{
+				if (feof(stdin))
+				{
+					printf("\n");
+					break;
+				}
+				else if (ferror(stdin))
+				{
+					perror("getline");
+					exit(EXIT_FAILURE);
+				}
+			}
 		}
-
-		line = get_path(command);
-		if (line == NULL)
+		else
 		{
-			free(command);
-			continue;
+			chars_read = getline(&command, &bufsize, stdin);
+			if (chars_read == -1)
+				break;
 		}
-
-		wand_execute(line);
+		command[strcspn(command, "\n")] = '\0';
+		tokenize_command(command, args);
 	}
-		return (0);
+	free(command);
+	return (0);
 }

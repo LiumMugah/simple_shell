@@ -2,23 +2,14 @@
 #define OCH_WAND
 
 #include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
+#define COMMAND_LENGTH 1024
 
-#define LINE_SIZE 1024
-#define ARGS_SIZE 10
-
-/* A structure to store commands and its arguments */
-struct command {
-	char *cmd;
-	char ** args;
-};
-
-char *wand_prompt ();
-struct command *get_path(char *line);
-void wand_execute(struct command *format);
+void execute_command(char *args[]);
+void tokenize_command(char *command, char *args[]);
 
 #endif
